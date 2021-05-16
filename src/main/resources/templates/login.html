@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thumeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template1"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<title>Login</title>
+</head>
+<body>
+	<div layout:fragment="pageContent">
+		<div class="container mt-5 ">
+			<div class="card col-md-5 mx-auto bg-blur">
+				<div class="card-header titreFont">
+					<h3>Sign In</h3>
+				</div>
+				<div class="card-body">
+				<div th:if="${param.error}" class="text-danger m-2">Bad credentials</div>
+					<form th:action="@{login}" method="post">
+						<div class="form-group row">
+							<label class="control-label col headerFont">User Name : </label> <input
+								type="text" name="username" class="form-control col-8 inputBorder">
+						</div>
+						<div class="form-group row">
+							<label class="control-label col headerFont">Password : </label> <input
+								type="password" name="password" class="form-control col-8 inputBorder">
+						</div>
+						<div class="d-flex justify-content-center">
+							<button class="btn btn-primary headerFont">submit</button>
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</body>
+</html>

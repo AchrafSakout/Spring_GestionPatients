@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thumeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="template1"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+<title>Page Patients</title>
+</head>
+<body>
+	<div layout:fragment="pageContent">
+		<div class="container mt-5">
+			<div class="card bg-blur">
+				<div class="card-header titreFont">patients</div>
+				<div class="card-body">
+
+					<table class="table">
+						<tr class="headerFont">
+							<th>ID</th>
+							<th>Name</th>
+							<th>Date Naissance</th>
+							<th>Malade</th>
+							<th>Score</th>
+						</tr>
+						<tr th:each="p:${patients}" class="bodyTableFont">
+							<td th:text="${p.id}"></td>
+							<td th:text="${p.nom}"></td>
+							<td th:text="${p.dateNaissance}"></td>
+							<td th:text="${p.malade}"></td>
+							<td th:text="${p.score}"></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+								onclick="return confirm('Etes vous sur de vouloir supprimer ?')"
+								class="btn btn-danger"
+								th:href="@{deletePatient(id=${p.id},keyword=${keyword},page=${currentPage},size=${size})}">Delete</a></td>
+							<td sec:authorize="hasRole('ROLE_ADMIN')"><a
+								class="btn btn-info" th:href="@{editPatient(id=${p.id})}">Edit</a></td>
+						</tr>
+					</table>
+					<form action="get"
+						class="form-group row d-flex justify-content-around"
+						th:action="@{patients}">
+						<label class="headerFont col-2">Name :</label> <input type="text"
+							name="keyword" class="form-control col-5 inputBorder"
+							th:value="${keyword}">
+						<button class="btn btn-success col-2">Chercher</button>
+					</form>
+				</div>
+			</div>
+
+			<ul class="nav nav-pills d-flex justify-content-center">
+				<li th:each="page,status:${pages}"><a
+					th:class="${status.index==currentPage?'btn btn-primary':'btn'}"
+					th:href="@{patients(page=${status.index},keyword=${keyword},size=${size})}"
+					th:text="${status.index}"></a></li>
+			</ul>
+		</div>
+
+	</div>
+
+</body>
+</html>
